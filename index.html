@@ -3,15 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weather Alerts App</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Weather Alerts Lab</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f0f8ff;
+    }
+    input, button {
+      padding: 8px;
+      margin-right: 8px;
+      font-size: 16px;
+    }
+    #error-message.hidden {
+      display: none;
+      color: red;
+      margin-top: 10px;
+    }
+    #error-message {
+      color: red;
+      margin-top: 10px;
+    }
+    #loading {
+      margin-top: 10px;
+      font-weight: bold;
+      display: none;
+    }
+    ul {
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Weather Alerts App</h1>
-  <input type="text" id="state-input" placeholder="Enter state abbreviation">
-  <button id="fetch-alerts">Get Weather Alerts</button>
-  <div id="alerts-display"></div>
+
+  <h1>Weather Alerts by State</h1>
+
+  <input id="state-input" type="text" placeholder="Enter state abbreviation">
+  <button id="get-alerts">Get Weather Alerts</button>
+
   <div id="error-message" class="hidden"></div>
-  <script src="./index.js"></script>
+  <div id="loading">Loading...</div>
+  <div id="alerts-display"></div>
+
+  <script src="index.js"></script>
 </body>
 </html>
