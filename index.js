@@ -32,7 +32,6 @@ function displayAlerts(data) {
   const count = data.features.length;
 
   const title = document.createElement("h2");
-  // ✅ Match the test exactly
   title.textContent = `Weather Alerts: ${count}`;
   alertsDiv.appendChild(title);
 
@@ -49,31 +48,30 @@ function displayAlerts(data) {
 function fetchWeatherAlerts(state) {
   if (!state) {
     displayError("Please enter a state abbreviation.");
-    return Promise.reject(new Error("Please enter a state abbreviation."));
+    return;
   }
 
   if (!/^[A-Z]{2}$/.test(state)) {
     displayError("State code must be two capital letters.");
-    return Promise.reject(new Error("State code must be two capital letters."));
+    return;
   }
 
-  // Clear input immediately, but DON'T clear error yet
+  // Clear input immediately
   stateInput.value = "";
   showLoading();
 
-  return fetch(`https://api.weather.gov/alerts/active?area=${state}`)
+  fetch(`https://api.weather.gov/alerts/active?area=${state}`)
     .then(response => {
       if (!response.ok) throw new Error("Failed to fetch weather alerts.");
       return response.json();
     })
     .then(data => {
-      clearError(); // ✅ Clear error only on success
+      clearError(); // Clear error only on success
       displayAlerts(data);
-      return data;
     })
     .catch(error => {
-      displayError(error.message);
-      throw error;
+      displayError(error.message); // Display the error
+      // ✅ DON'T re-throw the error - just handle it
     })
     .finally(() => hideLoading());
 }
