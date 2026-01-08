@@ -57,9 +57,8 @@ function fetchWeatherAlerts(state) {
     return Promise.reject(new Error("State code must be two capital letters."));
   }
 
-  // Clear input & error immediately for Jest tests
+  // Clear input immediately, but DON'T clear error yet
   stateInput.value = "";
-  clearError();
   showLoading();
 
   return fetch(`https://api.weather.gov/alerts/active?area=${state}`)
@@ -68,12 +67,13 @@ function fetchWeatherAlerts(state) {
       return response.json();
     })
     .then(data => {
+      clearError(); // ✅ Clear error only on success
       displayAlerts(data);
-      return data; // return data for Jest
+      return data;
     })
     .catch(error => {
       displayError(error.message);
-      throw error; // re-throw for Jest
+      throw error;
     })
     .finally(() => hideLoading());
 }
